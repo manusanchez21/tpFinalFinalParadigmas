@@ -47,6 +47,14 @@ public class Articulo {
     public Integer getIdArticulo() {
         return idArticulo;
     }
+
+    public ArrayList<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public Integer getDniAutor() {
+        return dniAutor;
+    }
     
     public String toCsv() {
         return idArticulo + "," + dniAutor + "," + titulo + "," + detalle + "," + fecha + "," + categoria;
