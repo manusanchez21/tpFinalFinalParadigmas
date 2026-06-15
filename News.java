@@ -67,7 +67,7 @@ public class News {
     }
 
     public void agregarAutor(Integer DNI, String nombre, Integer edad) throws IOException {
-        if(nombre == null || nombre.equals("")){
+        if (nombre == null || nombre.equals("")) {
             throw new IllegalArgumentException("No se puede guardar un nombre vacio");
         }
         if (edad < 0) {
@@ -84,7 +84,7 @@ public class News {
     }
 
     public void agregarLector(Integer DNI, String nombre, Integer edad) throws IOException {
-        if(nombre == null || nombre.equals("")){
+        if (nombre == null || nombre.equals("")) {
             throw new IllegalArgumentException("No se puede guardar un nombre vacio");
         }
         if (edad < 0) {
@@ -102,14 +102,17 @@ public class News {
 
     public void agregarArticulo(Integer dniAutor, String titulo, String detalle, String categoria) throws IOException {
         if (dniAutor < 0 || dniAutor == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("El dni del autor no puede ser null o negativo");
         }
         if (titulo == null || detalle == null) {
             throw new IllegalArgumentException();
         }
+
         if (titulo.equals("") || detalle.equals("")) {
             throw new IllegalArgumentException();
         }
+
+        validarExistenciaUsuario(dniAutor);
 
         Categoria categoriaC = verificarYCrearCategoria(categoria);
 
@@ -124,6 +127,36 @@ public class News {
         articulo.guardarEnArchivo();
     }
 
+    public void agregarComentario(Integer dniUsuario, Integer idArticulo, String text) throws IOException {
+        if (dniUsuario == null || dniUsuario < 0) {
+            throw new IllegalArgumentException("El dni no puede ser null o negativo");
+        }
+        if (idArticulo == null || idArticulo < 0) {
+            throw new IllegalArgumentException("El dni no puede ser null o negativo");
+        }
+        if (text == null) {
+            throw new IllegalArgumentException("El texto no puede ser null");
+        }
+        if (text.equals("")) {
+            throw new IllegalArgumentException("El texto no puede estar vacio");
+        }
+
+        validarExistenciaUsuario(dniUsuario);
+
+        Comentario comentario = new Comentario(dniUsuario, idArticulo, text);
+        int existeArticulo = 0;
+        for (Articulo articulo : articulos.values()) {
+            if (articulo.getIdArticulo() == idArticulo) {
+                articulo.agregarComentario(comentario);
+                existeArticulo = 1;
+                break;
+            }
+        }
+        if (existeArticulo == 0) {
+            throw new IllegalArgumentException("El articulo no existe");
+        }
+        comentario.guardarEnArchivo();
+    }
 
     private Categoria verificarYCrearCategoria(String categoria) throws IllegalArgumentException {
         if (categoria == null) {
@@ -138,5 +171,18 @@ public class News {
             }
         }
         throw new IllegalArgumentException("La categoria no es valida");
+    }
+
+    private void validarExistenciaUsuario(Integer dniUsuario) {
+        int existe = 0;
+        for (Usuario u : this.usuarios.values()) {
+            if (u.getDNI() == dniUsuario) {
+                existe = 1;
+                break;
+            }
+        }
+        if (existe == 0) {
+            throw new IllegalArgumentException("No existe el autor con dni" + dniUsuario);
+        }
     }
 }
