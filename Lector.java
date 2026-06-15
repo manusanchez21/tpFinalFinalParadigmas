@@ -10,6 +10,6 @@ public class Lector extends Usuario {
 
     @Override
     public String toString() {
-        return "El dni del lector es " + dni " su nombre es" + nombre + " y tiene " + edad;
+        return "El dni del lector es " + DNI + " su nombre es " + nombre + " y tiene " + edad;
     }
 }

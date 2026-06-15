@@ -1,7 +1,7 @@
 public abstract class Usuario {
-    private Integer DNI;
-    private String nombre;
-    private Integer edad;
+    protected Integer DNI;
+    protected String nombre;
+    protected Integer edad;
 
     public Usuario(Integer DNI, String nombre, Integer edad) {
         this.DNI = DNI;

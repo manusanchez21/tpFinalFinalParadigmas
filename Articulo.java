@@ -1,8 +1,5 @@
-package com.example.models;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
-import com.example.enums.Categoria;
 
 public class Articulo {
     private static Integer idCounter = 0;

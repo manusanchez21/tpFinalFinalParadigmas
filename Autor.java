@@ -1,15 +1,15 @@
 public class Autor extends Usuario {
     public Autor(Integer DNI, String nombre, Integer edad) {
-        super(Integer DNI, String nombre, Integer edad);
+        super(DNI, nombre, edad);
     } 
 
     @Override
     public String toCsv() {
-        return dni "," nombre "," edad ",";
+        return DNI + "," + nombre + "," + edad + ",";
     }
 
     @Override
     public String toString() {
-        return "El dni del autor es " + dni " su nombre es" + nombre + " y tiene " + edad;
+        return "El dni del autor es " + DNI + " su nombre es " + nombre + " y tiene " + edad;
     }
 }
