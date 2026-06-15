@@ -69,13 +69,16 @@ public class News {
     }
 
     public ArrayList<String> mostrarArticulosPorAutor(Integer dniAutor) throws InputMismatchException {
-        if(!(validarDNI(dniAutor) || !(usuarios.get(dniAutor) instanceof Autor))){
+        validarDNI(dniAutor);
+        
+        if (!(usuarios.get(dniAutor) instanceof Autor)) {
             throw new IllegalArgumentException("El DNI ingresado no es de un autor en el sistema");
         }
-        ArrayList<String> articulosDeAutor = new ArrayList<>();
+        
+        ArrayList<String> articulosDeAutor = new ArrayList<String>();
 
         for (Articulo articulo : this.articulos.values()) {
-            if (articulo.getAutor().getDNI() == dniAutor) {
+            if (articulo.getAutor().getDNI().equals(dniAutor)) {
                 articulosDeAutor.add(articulo.toString());
             }
         }
@@ -129,7 +132,7 @@ public class News {
         Categoria categoriaC = verificarYCrearCategoria(categoria);
 
     
-        if (usuarios.get(dniAutor) instanceof Autor) {
+        if (!(usuarios.get(dniAutor) instanceof Autor)) {
             throw new IllegalArgumentException("No se pudo encontrar el autor con ese dni");
         }
         Autor autor = (Autor) usuarios.get(dniAutor);
@@ -178,7 +181,7 @@ public class News {
     private boolean validarDNI(Integer dniUsuario) {
         if (dniUsuario == null || dniUsuario <= 0) {
             throw new IllegalArgumentException("El DNI " + dniUsuario + " es invalido");
-        }else if (this.usuarios.containsKey(dniUsuario)) {
+        }else if (!(this.usuarios.containsKey(dniUsuario))) {
             throw new IllegalArgumentException("No existe el autor con dni" + dniUsuario);
         }
         return true;

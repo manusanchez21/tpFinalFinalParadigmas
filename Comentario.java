@@ -12,11 +12,11 @@ public class Comentario implements Guardable {
     }
 
     public String toCsv() {
-        return this.usuario.getNombre() + "," + idArticulo + "," + texto;
+        return this.usuario.getDNI() + "," + idArticulo + "," + texto;
     }
 
     public String toString() {
-        return "El nombre del usuario es " + usuario.getNombre() + " y el comentario es " + this.texto;
+        return usuario.getNombre() + ": " + this.texto;
     }
 
     public void guardarEnArchivo() throws IOException {

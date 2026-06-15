@@ -1,5 +1,5 @@
 public enum Categoria{
-        Geopolitca,
+        Geopolitica,
         Deportivas,
         Cientificas,
         Policiales

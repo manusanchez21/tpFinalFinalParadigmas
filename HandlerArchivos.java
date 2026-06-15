@@ -63,9 +63,9 @@ public class HandlerArchivos {
                 reader.close();
                 throw new IllegalArgumentException("Existe inconsistencia entre los datos, un articulo fue escrito por un autor inexistente");
             }
-            Autor autor = new Autor(usuario.getDNI(), usuario.getNombre(), usuario.getEdad());
-            datos[6] = datos[6].trim();
-            Categoria categoria = Categoria.valueOf(datos[6]);
+            Autor autor = (Autor) usuario;
+            datos[5] = datos[5].trim();
+            Categoria categoria = Categoria.valueOf(datos[5]);
             if (comentarios.get(idArticulo) != null) {
                 Articulo articulo = new Articulo(idArticulo, autor, datos[2], datos[3], datos[4], comentarios.get(idArticulo), categoria);
                 articulos.put(idArticulo, articulo);
@@ -94,7 +94,11 @@ public class HandlerArchivos {
             Integer idArticulo = Integer.parseInt(datos[1]);
             Comentario comentario = new Comentario(usuarios.get(dniUsuario), idArticulo, datos[2]);
             ArrayList<Comentario> comentariosTemp = comentarios.get(idArticulo);
+            if (comentariosTemp == null) {
+                comentariosTemp = new ArrayList<Comentario>();
+            }
             comentariosTemp.add(comentario);
+            comentarios.remove(idArticulo);
             comentarios.put(idArticulo, comentariosTemp);
             comentarioCsv = reader.readLine();
         }
