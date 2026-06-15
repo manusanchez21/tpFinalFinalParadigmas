@@ -5,17 +5,17 @@ import java.util.ArrayList;
 public class Articulo implements Guardable {
     private static Integer idCounter = 0;
     private Integer idArticulo;
-    private Integer dniAutor;
+    private Autor autor;
     private String titulo;
     private String detalle;
     private LocalDate fecha;
     private ArrayList<Comentario> comentarios;
     private Categoria categoria;
 
-    Articulo(Integer dniAutor, String titulo, String detalle, Categoria categoria){
+    Articulo(Autor autor, String titulo, String detalle, Categoria categoria){
         idArticulo = idCounter;
         idCounter++;
-        this.dniAutor = dniAutor;
+        this.autor = autor;
         this.titulo = titulo;
         this.detalle = detalle;
         fecha = LocalDate.now();
@@ -23,12 +23,12 @@ public class Articulo implements Guardable {
         this.categoria = categoria; 
     }
 
-    Articulo(Integer idArticulo, Integer dniAutor, String titulo, String detalle, String fecha, ArrayList<Comentario> comentarios, Categoria categoria){
+    Articulo(Integer idArticulo, Autor autor, String titulo, String detalle, String fecha, ArrayList<Comentario> comentarios, Categoria categoria){
         if (idArticulo >= idCounter) {
             idCounter = idArticulo + 1;
         }
         this.idArticulo = idArticulo;
-        this.dniAutor = dniAutor;
+        this.autor = autor;
         this.titulo = titulo;
         this.detalle = detalle;
         String[] fechaPartes = fecha.split("-");
@@ -53,12 +53,12 @@ public class Articulo implements Guardable {
         return comentarios;
     }
 
-    public Integer getDniAutor() {
-        return dniAutor;
+    public Autor getAutor() {
+        return autor;
     }
     
     public String toCsv() {
-        return idArticulo + "," + dniAutor + "," + titulo + "," + detalle + "," + fecha + "," + categoria;
+        return idArticulo + "," + autor.getDNI() + "," + titulo + "," + detalle + "," + fecha + "," + categoria;
     }
 
     public void guardarEnArchivo() throws IOException {
@@ -67,5 +67,9 @@ public class Articulo implements Guardable {
         } catch (IOException e) {
             throw new IOException("Error al guardar el articulo: " + e.getMessage());
         }
+    }
+
+    public String toString(){
+        return "\n" + categoria + "\n" + titulo + ": " + detalle + "\n" + fecha.toString() + "\n";
     }
 }

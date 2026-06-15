@@ -1,10 +1,12 @@
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 
 public class News {
-    ArrayList<Usuario> usuarios;
-    ArrayList<Articulo> articulos;
+    HashMap<Integer, Usuario> usuarios;
+    HashMap<Integer, Articulo> articulos;
     HandlerArchivos handlerArchivos;
 
     // hacer constructor para cuando se inicializa el programa cargando arraylists
@@ -12,39 +14,39 @@ public class News {
     public News() {
         this.handlerArchivos = new HandlerArchivos();
         try {
-            this.articulos = handlerArchivos.cargarArticulos();
             this.usuarios = handlerArchivos.cargarUsuarios();
+            this.articulos = handlerArchivos.cargarArticulos(usuarios);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
     }
 
-    public ArrayList<Articulo> listarArticulosUltimoAnio() {
-        ArrayList<Articulo> articulosFiltrados = new ArrayList<Articulo>();
+    public ArrayList<String> listarArticulosUltimoAnio() {
+        ArrayList<String> articulosFiltradosTxt = new ArrayList<String>();
         LocalDate actualMenosUnAnio = LocalDate.now().minusYears(1);
-        for (Articulo articulo : this.articulos) {
+        for (Articulo articulo : this.articulos.values()) {
             if (articulo.getFecha().isAfter(actualMenosUnAnio)) {
-                articulosFiltrados.add(articulo);
+                articulosFiltradosTxt.add(articulo.toString() + articulo.getAutor().getNombre());
             }
         }
-        return articulosFiltrados;
+        return articulosFiltradosTxt;
     }
 
     public ArrayList<Articulo> listarArticulosUltimoMes() {
         ArrayList<Articulo> articulosFiltrados = new ArrayList<Articulo>();
         LocalDate actualMenosUnMes = LocalDate.now().minusMonths(1);
-        for (Articulo articulo : this.articulos) {
+        for (Articulo articulo : this.articulos.values()) {
             if (articulo.getFecha().isAfter(actualMenosUnMes));
         }
         return articulosFiltrados;
     }
 
-    public ArrayList<Articulo> todosLosArticulos() {
-        return this.articulos;
+    public Collection<Articulo> todosLosArticulos() {
+        return this.articulos.values();
     }
 
     public ArrayList<Comentario> mostrarComentariosDeUnArticulo(Integer idArticulo) {
-        for (Articulo articulo : articulos) {
+        for (Articulo articulo : articulos.values()) {
             if (articulo.getIdArticulo() == idArticulo) {
                 return articulo.getComentarios();
             }
@@ -56,8 +58,8 @@ public class News {
     public ArrayList<Articulo> mostrarArticlosPorAutor(Integer dniAutor) {
         ArrayList<Articulo> articulosDeAutor = new ArrayList<Articulo>();
 
-        for (Articulo articulo : this.articulos) {
-            if (articulo.getDniAutor() == dniAutor) {
+        for (Articulo articulo : this.articulos.values()) {
+            if (articulo.getAutor().getDNI() == dniAutor) {
                 articulosDeAutor.add(articulo);
             }
         }
@@ -71,13 +73,13 @@ public class News {
         if (edad < 0) {
             throw new IllegalArgumentException("No se puede generar una edad menor a 0");
         }
-        for (Usuario usuario : usuarios) {
+        for (Usuario usuario : usuarios.values()) {
             if (usuario.getDNI() == DNI) {
                 throw new IllegalArgumentException("Ya existe un usuario con este DNI");
             }
         }
         Autor autor = new Autor(DNI, nombre, edad);
-        usuarios.add(autor);
+        usuarios.put(DNI,autor);
         autor.guardarEnArchivo();
     }
 
@@ -88,13 +90,13 @@ public class News {
         if (edad < 0) {
             throw new IllegalArgumentException("No se puede generar una edad menor a 0");
         }
-        for (Usuario usuario : usuarios) {
+        for (Usuario usuario : usuarios.values()) {
             if (usuario.getDNI() == DNI) {
                 throw new IllegalArgumentException("Ya existe un usuario con este DNI");
             }
         }
         Lector lector = new Lector(DNI, nombre, edad);
-        usuarios.add(lector);
+        usuarios.put(DNI,lector);
         lector.guardarEnArchivo();
     }
 
@@ -111,9 +113,14 @@ public class News {
 
         Categoria categoriaC = verificarYCrearCategoria(categoria);
 
+    
+        if (!(usuarios.containsKey(dniAutor) && usuarios.get(dniAutor) instanceof Autor)) {
+            throw new IllegalArgumentException("No se pudo encontrar el autor con ese dni");
+        }
+        Autor autor = new Autor(dniAutor, usuarios.get(dniAutor).getNombre(), usuarios.get(dniAutor).getEdad());
 
-        Articulo articulo = new Articulo(dniAutor, titulo, detalle, categoriaC);
-        this.articulos.add(articulo);
+        Articulo articulo = new Articulo(autor, titulo, detalle, categoriaC);
+        this.articulos.put(articulo.getIdArticulo(), articulo);
         articulo.guardarEnArchivo();
     }
 
