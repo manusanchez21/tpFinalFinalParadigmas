@@ -23,8 +23,9 @@ public class News {
         ArrayList<Articulo> articulosFiltrados = new ArrayList<Articulo>();
         LocalDate actualMenosUnAnio = LocalDate.now().minusYears(1);
         for (Articulo articulo : this.articulos) {
-            if (articulo.getFecha().isAfter(actualMenosUnAnio))
-                ;
+            if (articulo.getFecha().isAfter(actualMenosUnAnio)) {
+                articulosFiltrados.add(articulo);
+            }
         }
         return articulosFiltrados;
     }
@@ -52,7 +53,7 @@ public class News {
         return comentarios;
     }
 
-    public ArrayList<Articulo> moastrarArticlosPorAutor(Integer dniAutor) {
+    public ArrayList<Articulo> mostrarArticlosPorAutor(Integer dniAutor) {
         ArrayList<Articulo> articulosDeAutor = new ArrayList<Articulo>();
 
         for (Articulo articulo : this.articulos) {

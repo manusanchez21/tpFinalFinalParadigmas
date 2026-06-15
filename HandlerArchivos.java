@@ -11,10 +11,11 @@ public class HandlerArchivos {
     }
 
     public void escribirArchivo(String textoCsv, String path) throws IOException {
-        try (FileWriter fw = new FileWriter(path);
-                BufferedWriter bw = new BufferedWriter(fw)) {
-            bw.write(textoCsv);
-        }
+        FileWriter fw = new FileWriter(path);
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write(textoCsv);
+        bw.close();
+
     }
 
     public ArrayList<Usuario> cargarUsuarios() throws IOException {
@@ -59,7 +60,7 @@ public class HandlerArchivos {
             Integer idArticulo = Integer.parseInt(datos[0]);
             Integer dniAutor = Integer.parseInt(datos[1]);
             datos[6] = datos[6].trim();
-            Categoria categoria = Categoria.valueOf(datos[6]); 
+            Categoria categoria = Categoria.valueOf(datos[6]);
             if (comentarios.get(idArticulo) != null) {
                 Articulo articulo = new Articulo(idArticulo, dniAutor, datos[2], datos[3], datos[4],
                         comentarios.get(idArticulo), categoria);
