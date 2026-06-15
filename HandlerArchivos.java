@@ -11,9 +11,10 @@ public class HandlerArchivos {
     }
 
     public static void escribirArchivo(String textoCsv, String path) throws IOException {
-        FileWriter fw = new FileWriter(path);
+        FileWriter fw = new FileWriter(path, true);
         BufferedWriter bw = new BufferedWriter(fw);
         bw.write(textoCsv);
+        bw.newLine();
         bw.close();
     }
 
