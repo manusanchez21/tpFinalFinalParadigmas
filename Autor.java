@@ -5,7 +5,7 @@ public class Autor extends Usuario {
 
     @Override
     public String toCsv() {
-        return DNI + "," + nombre + "," + edad + ",";
+        return DNI + "," + nombre + "," + edad + ",0";
     }
 
     @Override

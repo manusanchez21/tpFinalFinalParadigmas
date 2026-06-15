@@ -10,7 +10,7 @@ public abstract class Usuario {
     }
     
     public void comentar(Articulo articulo, String texto) {
-        Comentario comentario = new Comentario(this.DNI, texto);
+        Comentario comentario = new Comentario(this.DNI, articulo.getIdArticulo(), texto);
         articulo.agregarComentario(comentario);
         // Handler
     }

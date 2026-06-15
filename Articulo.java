@@ -43,6 +43,10 @@ public class Articulo {
     public LocalDate getFecha() {
         return fecha;
     }
+
+    public Integer getIdArticulo() {
+        return idArticulo;
+    }
     
     public String toCsv() {
         return idArticulo + "," + dniAutor + "," + titulo + "," + detalle + "," + fecha + "," + categoria;
