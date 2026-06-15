@@ -1,4 +1,6 @@
-public abstract class Usuario {
+import java.io.IOException;
+
+public abstract class Usuario implements Guardable {
     protected Integer DNI;
     protected String nombre;
     protected Integer edad;
@@ -25,6 +27,14 @@ public abstract class Usuario {
 
     public String getNombre() {
         return nombre;
+    }
+
+    public void guardarEnArchivo() throws IOException {
+        try {
+            HandlerArchivos.escribirArchivo(this.toCsv(), "usuarios.txt");
+        } catch (IOException e) {
+            throw new IOException("Error al guardar el usuario: " + e.getMessage());
+        }
     }
 
     public abstract String toString();
