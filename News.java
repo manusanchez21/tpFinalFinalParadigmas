@@ -110,7 +110,7 @@ public class News {
         if (titulo.equals("") || detalle.equals("")) {
             throw new IllegalArgumentException();
         }
-        
+
         validarExistenciaUsuario(dniAutor);
 
         Categoria categoriaC = verificarYCrearCategoria(categoria);
@@ -137,11 +137,16 @@ public class News {
         validarExistenciaUsuario(dniUsuario);
 
         Comentario comentario = new Comentario(dniUsuario, idArticulo, text);
+        int existeArticulo = 0;
         for (Articulo articulo : articulos) {
             if (articulo.getIdArticulo() == idArticulo) {
                 articulo.agregarComentario(comentario);
+                existeArticulo = 1;
                 break;
             }
+        }
+        if (existeArticulo == 0) {
+            throw new IllegalArgumentException("El articulo no existe");
         }
         comentario.guardarEnArchivo();
     }
