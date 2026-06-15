@@ -101,17 +101,17 @@ public class News {
 
     public void agregarArticulo(Integer dniAutor, String titulo, String detalle, String categoria) throws IOException {
         if (dniAutor < 0 || dniAutor == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("El dni del autor no puede ser null o negativo");
         }
         if (titulo == null || detalle == null) {
             throw new IllegalArgumentException();
         }
 
-        validarExistenciaUsuario(dniAutor);
-
         if (titulo.equals("") || detalle.equals("")) {
             throw new IllegalArgumentException();
         }
+        
+        validarExistenciaUsuario(dniAutor);
 
         Categoria categoriaC = verificarYCrearCategoria(categoria);
 
@@ -135,7 +135,7 @@ public class News {
         }
 
         validarExistenciaUsuario(dniUsuario);
-        
+
         Comentario comentario = new Comentario(dniUsuario, idArticulo, text);
         for (Articulo articulo : articulos) {
             if (articulo.getIdArticulo() == idArticulo) {
