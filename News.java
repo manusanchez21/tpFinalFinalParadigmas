@@ -72,8 +72,38 @@ public class News {
 
     }
 
-    public void agregarArticulo() {
+    public void agregarArticulo(Integer dniAutor, String titulo, String detalle, String categoria) throws IOException {
+        if (dniAutor < 0 || dniAutor == null) {
+            throw new IllegalArgumentException();
+        }
+        if (titulo == null || detalle == null) {
+            throw new IllegalArgumentException();
+        }
+        if (titulo.equals("") || detalle.equals("")) {
+            throw new IllegalArgumentException();
+        }
 
+        Categoria categoriaC = verificarYCrearCategoria(categoria);
+
+
+        Articulo articulo = new Articulo(dniAutor, titulo, detalle, categoriaC);
+        this.articulos.add(articulo);
+        articulo.guardarEnArchivo();
     }
 
+
+    private Categoria verificarYCrearCategoria(String categoria) throws IllegalArgumentException {
+        if (categoria == null) {
+            throw new IllegalArgumentException();
+        }
+
+        String categoriaLimpia = categoria.trim();
+
+        for (Categoria c : Categoria.values()) {
+            if (c.name().equalsIgnoreCase(categoriaLimpia)) {
+                return c;
+            }
+        }
+        throw new IllegalArgumentException("La categoria no es valida");
+    }
 }
