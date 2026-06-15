@@ -4,10 +4,24 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * Clase Main.
+ * Clase principal que implementa la interfaz de usuario del sistema de noticias.
+ * Ofrece un menú interactivo para las diferentes operaciones del sistema.
+ * 
+ * @author Jano Chiambretto y Manuel Sanchez Fossa
+ * @version 1.0.0
+ */
 public class Main {
 	private static News news;
 	private static Scanner scanner = new Scanner(System.in);
 
+	/**
+	 * Método principal del programa.
+	 * Inicializa el sistema y presenta el menú interactivo.
+	 * 
+	 * @param args argumentos de línea de comandos (no utilizados)
+	 */
 	public static void main(String[] args) {
 		asegurarArchivosExistentes();
 
@@ -55,6 +69,10 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Asegura que los archivos necesarios existan.
+	 * Crea los archivos si no existen.
+	 */
 	private static void asegurarArchivosExistentes() {
 		try {
 			String[] archivos = {"usuarios.txt", "articulos.txt", "comentarios.txt"};
@@ -69,6 +87,9 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Muestra el menú principal con todas las opciones disponibles.
+	 */
 	private static void mostrarMenuPrincipal() {
 		System.out.println("\n--- SISTEMA DE NOTICIAS - MENU PRINCIPAL ---");
 		System.out.println("1) Registro de autores");
@@ -83,6 +104,12 @@ public class Main {
 		System.out.println("0) Salir");
 	}
 
+	/**
+	 * Lee un número entero desde la entrada del usuario con validación.
+	 * 
+	 * @param prompt el mensaje a mostrar al usuario
+	 * @return el número entero ingresado
+	 */
 	private static int leerEntero(String prompt) {
 		while (true) {
 			try {
@@ -95,11 +122,21 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Lee una línea de texto desde la entrada del usuario.
+	 * 
+	 * @param prompt el mensaje a mostrar al usuario
+	 * @return el texto ingresado
+	 */
 	private static String leerTexto(String prompt) {
 		System.out.print(prompt);
 		return scanner.nextLine();
 	}
 
+	/**
+	 * Registra un nuevo autor en el sistema.
+	 * Solicita DNI, nombre y edad al usuario.
+	 */
 	private static void registrarAutor() {
 		try {
 			int dni = leerEntero("DNI del autor: ");
@@ -112,6 +149,10 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Registra un nuevo lector en el sistema.
+	 * Solicita DNI, nombre y edad al usuario.
+	 */
 	private static void registrarLector() {
 		try {
 			int dni = leerEntero("DNI del usuario: ");
@@ -124,6 +165,10 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Carga una nueva noticia al sistema.
+	 * Solicita DNI del autor, título, detalle y categoría.
+	 */
 	private static void cargarNoticia() {
 		try {
 			int dniAutor = leerEntero("DNI del autor que publica: ");
@@ -138,6 +183,10 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Registra un nuevo comentario en el sistema.
+	 * Solicita DNI del usuario, ID del artículo y texto del comentario.
+	 */
 	private static void registrarComentario() {
 		try {
 			int dniUsuario = leerEntero("DNI del usuario que comenta: ");
@@ -150,6 +199,9 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Lista y muestra todos los artículos publicados en el último año.
+	 */
 	private static void listarUltimoAnio() {
 		try {
 			ArrayList<String> lista = news.listarArticulosUltimoAnio();
@@ -164,6 +216,9 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Lista y muestra todos los artículos publicados en el último mes.
+	 */
 	private static void listarUltimoMes() {
 		try {
 			ArrayList<String> lista = news.listarArticulosUltimoMes();
@@ -178,6 +233,10 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Muestra un artículo específico y todos sus comentarios.
+	 * Solicita el ID del artículo al usuario.
+	 */
 	private static void mostrarNoticiaYComentarios() {
 		try {
 			int id = leerEntero("ID del artículo a mostrar: ");
@@ -202,6 +261,10 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Lista todos los artículos publicados por un autor específico.
+	 * Solicita el DNI del autor al usuario.
+	 */
 	private static void listarPorAutor() {
 		try {
 			Integer dni = leerEntero("DNI del autor: ");
@@ -219,6 +282,9 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Lista y muestra todos los artículos del sistema.
+	 */
 	private static void listarTodosLosArticulos() {
 		try {
 			ArrayList<String> lista = news.todosLosArticulos();

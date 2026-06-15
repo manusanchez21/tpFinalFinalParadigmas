@@ -6,10 +6,29 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Clase HandlerArchivos.
+ * Gestiona la lectura y escritura de datos en archivos de texto (CSV).
+ * Maneja la persistencia de usuarios, artículos y comentarios.
+ * 
+ * @author Jano Chiambretto y Manuel Sanchez Fossa
+ * @version 1.0.0
+ */
 public class HandlerArchivos {
+    /**
+     * Constructor de HandlerArchivos.
+     */
     public HandlerArchivos() {
     }
 
+    /**
+     * Escribe una línea de texto CSV en un archivo.
+     * Si el archivo no existe, lo crea.
+     * 
+     * @param textoCsv el texto CSV a escribir
+     * @param path la ruta del archivo
+     * @throws IOException si ocurre un error al escribir
+     */
     public static void escribirArchivo(String textoCsv, String path) throws IOException {
         FileWriter fw = new FileWriter(path, true);
         BufferedWriter bw = new BufferedWriter(fw);
@@ -18,6 +37,13 @@ public class HandlerArchivos {
         bw.close();
     }
 
+    /**
+     * Carga todos los usuarios del archivo.
+     * Distingue entre Autores (tipo 0) y Lectores (tipo 1).
+     * 
+     * @return HashMap con los usuarios cargados, indexed por DNI
+     * @throws IOException si ocurre un error al leer el archivo
+     */
     public HashMap<Integer, Usuario> cargarUsuarios() throws IOException {
         HashMap<Integer, Usuario> usuarios = new HashMap<Integer, Usuario>();
 
@@ -46,6 +72,14 @@ public class HandlerArchivos {
 
     }
 
+    /**
+     * Carga todos los artículos del archivo.
+     * Asocia comentarios a cada artículo.
+     * 
+     * @param usuarios HashMap con los usuarios cargados previamente
+     * @return HashMap con los artículos cargados, indexed por ID
+     * @throws IOException si ocurre un error al leer el archivo
+     */
     public HashMap<Integer, Articulo> cargarArticulos(HashMap<Integer, Usuario> usuarios) throws IOException {
         HashMap<Integer, Articulo> articulos = new HashMap<Integer, Articulo>();
 
@@ -81,6 +115,14 @@ public class HandlerArchivos {
         return articulos;
     }
 
+    /**
+     * Carga todos los comentarios del archivo.
+     * Agrupa comentarios por ID de artículo.
+     * 
+     * @param usuarios HashMap con los usuarios cargados previamente
+     * @return HashMap con ArrayList de comentarios, indexed por ID de artículo
+     * @throws IOException si ocurre un error al leer el archivo
+     */
     private HashMap<Integer, ArrayList<Comentario>> cargarComentarios(HashMap<Integer, Usuario> usuarios) throws IOException {
         HashMap<Integer, ArrayList<Comentario>> comentarios = new HashMap<Integer, ArrayList<Comentario>>();
 
