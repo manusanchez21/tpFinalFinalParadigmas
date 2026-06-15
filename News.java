@@ -28,19 +28,19 @@ public class News {
         return articulosFiltrados;
     }
 
-    public void listarArticulosUltimoMes() {
+    public ArrayList<Articulo> listarArticulosUltimoMes() {
 
     }
     
-    public void mostrarTodosLosArticulos() {
+    public ArrayList<Articulo> todosLosArticulos() {
+        return this.articulos;
+    }
+
+    public ArrayList<Comentario> mostrarComentariosDeUnArticulo(Integer articuloId) {
 
     }
 
-    public void mostrarComentariosDeUnaNoticia() {
-
-    }
-
-    public void moastrarArticlosPorAutor() {
+    public ArrayList<Articulo> moastrarArticlosPorAutor() {
 
     }
 
