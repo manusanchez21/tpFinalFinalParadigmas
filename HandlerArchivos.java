@@ -77,7 +77,7 @@ public class HandlerArchivos {
         return articulos;
     }
 
-    public HashMap<Integer, ArrayList<Comentario>> cargarComentarios() throws IOException {
+    private HashMap<Integer, ArrayList<Comentario>> cargarComentarios() throws IOException {
         HashMap<Integer, ArrayList<Comentario>> comentarios = new HashMap<Integer, ArrayList<Comentario>>();
 
         BufferedReader reader = new BufferedReader(new FileReader("comentarios.txt"));
