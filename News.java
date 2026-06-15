@@ -69,17 +69,17 @@ public class News {
         return comentarios;
     }
 
-    public ArrayList<Articulo> mostrarArticulosPorAutor(Integer dniAutor) throws InputMismatchException {
+    public ArrayList<String> mostrarArticulosPorAutor(Integer dniAutor) throws InputMismatchException {
         if(dniAutor <= 0){
             throw new InputMismatchException("DNI no valido");
-        }else if(!(usuarios.containsKey(dniAutor)) || !(usuarios.get(dniAutor) instanceof Autor)){
+        }else if(!(validarExistenciaUsuario(dniAutor) || !(usuarios.get(dniAutor) instanceof Autor))){
             throw new IllegalArgumentException("El DNI ingresado no es de un autor en el sistema");
         }
-        ArrayList<Articulo> articulosDeAutor = new ArrayList<Articulo>();
+        ArrayList<String> articulosDeAutor = new ArrayList<>();
 
         for (Articulo articulo : this.articulos.values()) {
             if (articulo.getAutor().getDNI() == dniAutor) {
-                articulosDeAutor.add(articulo);
+                articulosDeAutor.add(articulo.toString());
             }
         }
         return articulosDeAutor;
@@ -142,10 +142,10 @@ public class News {
         Categoria categoriaC = verificarYCrearCategoria(categoria);
 
     
-        if (!(usuarios.containsKey(dniAutor) && usuarios.get(dniAutor) instanceof Autor)) {
+        if (!(validarExistenciaUsuario(dniAutor) && usuarios.get(dniAutor) instanceof Autor)) {
             throw new IllegalArgumentException("No se pudo encontrar el autor con ese dni");
         }
-        Autor autor = new Autor(dniAutor, usuarios.get(dniAutor).getNombre(), usuarios.get(dniAutor).getEdad());
+        Autor autor = (Autor) usuarios.get(dniAutor);
 
         Articulo articulo = new Articulo(autor, titulo, detalle, categoriaC);
         this.articulos.put(articulo.getIdArticulo(), articulo);
@@ -168,18 +168,11 @@ public class News {
 
         validarExistenciaUsuario(dniUsuario);
 
-        Comentario comentario = usuarios.get(dniUsuario).comentar(articulos.get(idArticulo), text);
-        int existeArticulo = 0;
-        for (Articulo articulo : articulos.values()) {
-            if (articulo.getIdArticulo() == idArticulo) {
-                articulo.agregarComentario(comentario);
-                existeArticulo = 1;
-                break;
-            }
-        }
-        if (existeArticulo == 0) {
+        if (!articulos.containsKey(idArticulo)) {
             throw new IllegalArgumentException("El articulo no existe");
         }
+        Comentario comentario = usuarios.get(dniUsuario).comentar(articulos.get(idArticulo), text);
+        this.articulos.get(idArticulo).agregarComentario(comentario);
         comentario.guardarEnArchivo();
     }
 
@@ -198,16 +191,10 @@ public class News {
         throw new IllegalArgumentException("La categoria no es valida");
     }
 
-    private void validarExistenciaUsuario(Integer dniUsuario) {
-        int existe = 0;
-        for (Usuario u : this.usuarios.values()) {
-            if (u.getDNI() == dniUsuario) {
-                existe = 1;
-                break;
-            }
-        }
-        if (existe == 0) {
+    private boolean validarExistenciaUsuario(Integer dniUsuario) {
+        if (this.usuarios.containsKey(dniUsuario)) {
             throw new IllegalArgumentException("No existe el autor con dni" + dniUsuario);
         }
+        return true;
     }
 }
