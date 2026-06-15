@@ -64,12 +64,38 @@ public class News {
         return articulosDeAutor;
     }
 
-    public void agregarAutor() {
-
+    public void agregarAutor(Integer DNI, String nombre, Integer edad) throws IOException {
+        if(nombre == null || nombre.equals("")){
+            throw new IllegalArgumentException("No se puede guardar un nombre vacio");
+        }
+        if (edad < 0) {
+            throw new IllegalArgumentException("No se puede generar una edad menor a 0");
+        }
+        for (Usuario usuario : usuarios) {
+            if (usuario.getDNI() == DNI) {
+                throw new IllegalArgumentException("Ya existe un usuario con este DNI");
+            }
+        }
+        Autor autor = new Autor(DNI, nombre, edad);
+        usuarios.add(autor);
+        autor.guardarEnArchivo();
     }
 
-    public void agregarLector() {
-
+    public void agregarLector(Integer DNI, String nombre, Integer edad) throws IOException {
+        if(nombre == null || nombre.equals("")){
+            throw new IllegalArgumentException("No se puede guardar un nombre vacio");
+        }
+        if (edad < 0) {
+            throw new IllegalArgumentException("No se puede generar una edad menor a 0");
+        }
+        for (Usuario usuario : usuarios) {
+            if (usuario.getDNI() == DNI) {
+                throw new IllegalArgumentException("Ya existe un usuario con este DNI");
+            }
+        }
+        Lector lector = new Lector(DNI, nombre, edad);
+        usuarios.add(lector);
+        lector.guardarEnArchivo();
     }
 
     public void agregarArticulo() {
