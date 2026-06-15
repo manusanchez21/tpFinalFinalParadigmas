@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class News {
@@ -20,25 +21,26 @@ public class News {
 
     public ArrayList<Articulo> listarArticulosUltimoAnio() {
         ArrayList<Articulo> articulosFiltrados = new ArrayList<Articulo>();
+        LocalDate actualMenosUnAnio = LocalDate.now().minusYears(1);
         for (Articulo articulo : this.articulos) {
-            if (articulo.getFecha().isAfter())
+            if (articulo.getFecha().isAfter(actualMenosUnAnio));
         }
         return articulosFiltrados;
     }
 
-    public void listarArticulosUltimoMes() {
+    public ArrayList<Articulo> listarArticulosUltimoMes() {
 
     }
     
-    public void mostrarTodosLosArticulos() {
+    public ArrayList<Articulo> todosLosArticulos() {
+        return this.articulos;
+    }
+
+    public ArrayList<Comentario> mostrarComentariosDeUnArticulo(Integer articuloId) {
 
     }
 
-    public void mostrarComentariosDeUnaNoticia() {
-
-    }
-
-    public void moastrarArticlosPorAutor() {
+    public ArrayList<Articulo> moastrarArticlosPorAutor() {
 
     }
 
