@@ -18,7 +18,7 @@ public class HandlerArchivos {
 
     public ArrayList<Usuario> cargarUsuarios() throws IOException {
         ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
-        
+
         BufferedReader reader = new BufferedReader(new FileReader("usuarios.txt"));
 
         String usuario = reader.readLine();
@@ -44,11 +44,34 @@ public class HandlerArchivos {
 
     }
 
-    public ArrayList<Articulo> cargarArticulos() {
+    public ArrayList<Articulo> cargarArticulos() throws IOException {
         ArrayList<Articulo> articulos = new ArrayList<Articulo>();
 
-        
+        BufferedReader reader = new BufferedReader(new FileReader("articulos.txt"));
+
+        String articulo = reader.readLine();
+
+        if (articulo != null) {
+            String[] datos = articulo.split(",");
+
+        }
 
         return articulos;
+    }
+
+    public ArrayList<Comentario> cargarComentarios() throws IOException {
+        ArrayList<Comentario> comentarios = new ArrayList<Comentario>();
+
+        BufferedReader reader = new BufferedReader(new FileReader("comentarios.txt"));
+
+        String articulo = reader.readLine();
+
+
+        if (articulo != null) {
+            
+            comentarios.add(null)
+        }
+
+        return comentarios;
     }
 }
