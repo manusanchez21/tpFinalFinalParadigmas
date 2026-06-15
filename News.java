@@ -9,7 +9,7 @@ public class News {
 
     public News() {
         this.usuarios = new ArrayList<Usuario>();
-        this.articulos = new ArrayList<Usuario>();
+        this.articulos = new ArrayList<Articulo>();
         this.handlerArchivos = new HandlerArchivos();
     }
 
