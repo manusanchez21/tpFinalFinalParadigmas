@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 
@@ -70,9 +69,7 @@ public class News {
     }
 
     public ArrayList<String> mostrarArticulosPorAutor(Integer dniAutor) throws InputMismatchException {
-        if(dniAutor <= 0){
-            throw new InputMismatchException("DNI no valido");
-        }else if(!(validarExistenciaUsuario(dniAutor) || !(usuarios.get(dniAutor) instanceof Autor))){
+        if(!(validarDNI(dniAutor) || !(usuarios.get(dniAutor) instanceof Autor))){
             throw new IllegalArgumentException("El DNI ingresado no es de un autor en el sistema");
         }
         ArrayList<String> articulosDeAutor = new ArrayList<>();
@@ -92,13 +89,8 @@ public class News {
         if (edad < 0) {
             throw new IllegalArgumentException("No se puede generar una edad menor a 0");
         }
-        if (DNI <= 0) {
+        if (DNI == null || DNI <= 0 || usuarios.containsKey(DNI)) {
             throw new IllegalArgumentException("DNI no valido");
-        }
-        for (Usuario usuario : usuarios.values()) {
-            if (usuario.getDNI() == DNI) {
-                throw new IllegalArgumentException("Ya existe un usuario con este DNI");
-            }
         }
         Autor autor = new Autor(DNI, nombre, edad);
         usuarios.put(DNI,autor);
@@ -126,9 +118,7 @@ public class News {
     }
 
     public void agregarArticulo(Integer dniAutor, String titulo, String detalle, String categoria) throws IOException {
-        if (dniAutor < 0 || dniAutor == null) {
-            throw new IllegalArgumentException("El dni del autor no puede ser null o negativo");
-        }
+        validarDNI(dniAutor);
         if (titulo == null || detalle == null) {
             throw new IllegalArgumentException();
         }
@@ -136,13 +126,10 @@ public class News {
         if (titulo.equals("") || detalle.equals("")) {
             throw new IllegalArgumentException();
         }
-
-        validarExistenciaUsuario(dniAutor);
-
         Categoria categoriaC = verificarYCrearCategoria(categoria);
 
     
-        if (!(validarExistenciaUsuario(dniAutor) && usuarios.get(dniAutor) instanceof Autor)) {
+        if (usuarios.get(dniAutor) instanceof Autor) {
             throw new IllegalArgumentException("No se pudo encontrar el autor con ese dni");
         }
         Autor autor = (Autor) usuarios.get(dniAutor);
@@ -153,9 +140,6 @@ public class News {
     }
 
     public void agregarComentario(Integer dniUsuario, Integer idArticulo, String text) throws IOException {
-        if (dniUsuario == null || dniUsuario < 0) {
-            throw new IllegalArgumentException("El dni no puede ser null o negativo");
-        }
         if (idArticulo == null || idArticulo < 0) {
             throw new IllegalArgumentException("El dni no puede ser null o negativo");
         }
@@ -166,7 +150,7 @@ public class News {
             throw new IllegalArgumentException("El texto no puede estar vacio");
         }
 
-        validarExistenciaUsuario(dniUsuario);
+        validarDNI(dniUsuario);
 
         if (!articulos.containsKey(idArticulo)) {
             throw new IllegalArgumentException("El articulo no existe");
@@ -191,8 +175,10 @@ public class News {
         throw new IllegalArgumentException("La categoria no es valida");
     }
 
-    private boolean validarExistenciaUsuario(Integer dniUsuario) {
-        if (this.usuarios.containsKey(dniUsuario)) {
+    private boolean validarDNI(Integer dniUsuario) {
+        if (dniUsuario == null || dniUsuario <= 0) {
+            throw new IllegalArgumentException("El DNI " + dniUsuario + " es invalido");
+        }else if (this.usuarios.containsKey(dniUsuario)) {
             throw new IllegalArgumentException("No existe el autor con dni" + dniUsuario);
         }
         return true;
