@@ -1,7 +1,8 @@
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Articulo {
+public class Articulo implements Guardable {
     private static Integer idCounter = 0;
     private Integer idArticulo;
     private Integer dniAutor;
@@ -58,5 +59,13 @@ public class Articulo {
     
     public String toCsv() {
         return idArticulo + "," + dniAutor + "," + titulo + "," + detalle + "," + fecha + "," + categoria;
+    }
+
+    public void guardarEnArchivo() throws IOException {
+        try {
+            HandlerArchivos.escribirArchivo(this.toCsv(), "articulos.txt");
+        } catch (IOException e) {
+            throw new IOException("Error al guardar el articulo: " + e.getMessage());
+        }
     }
 }

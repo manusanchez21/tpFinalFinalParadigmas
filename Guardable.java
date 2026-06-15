@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 interface Guardable {
-    public void guardarEnArchivo(String texto, String path);
+    public void guardarEnArchivo() throws IOException;
 }
