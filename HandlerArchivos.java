@@ -17,8 +17,6 @@ public class HandlerArchivos {
         bw.close();
     }
 
-    }
-
     public ArrayList<Usuario> cargarUsuarios() throws IOException {
         ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 
