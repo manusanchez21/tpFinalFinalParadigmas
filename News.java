@@ -3,6 +3,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.InputMismatchException;
 
 public class News {
     HashMap<Integer, Usuario> usuarios;
@@ -26,23 +27,29 @@ public class News {
         LocalDate actualMenosUnAnio = LocalDate.now().minusYears(1);
         for (Articulo articulo : this.articulos.values()) {
             if (articulo.getFecha().isAfter(actualMenosUnAnio)) {
-                articulosFiltradosTxt.add(articulo.toString() + articulo.getAutor().getNombre());
+                articulosFiltradosTxt.add(articulo.toString());
             }
         }
         return articulosFiltradosTxt;
     }
 
-    public ArrayList<Articulo> listarArticulosUltimoMes() {
-        ArrayList<Articulo> articulosFiltrados = new ArrayList<Articulo>();
+    public ArrayList<String> listarArticulosUltimoMes() {
+        ArrayList<String> articulosFiltradosTxt = new ArrayList<String>();
         LocalDate actualMenosUnMes = LocalDate.now().minusMonths(1);
         for (Articulo articulo : this.articulos.values()) {
-            if (articulo.getFecha().isAfter(actualMenosUnMes));
+            if (articulo.getFecha().isAfter(actualMenosUnMes)){
+                articulosFiltradosTxt.add(articulo.toString());
+            }
         }
-        return articulosFiltrados;
+        return articulosFiltradosTxt;
     }
 
-    public Collection<Articulo> todosLosArticulos() {
-        return this.articulos.values();
+    public ArrayList<String> todosLosArticulos() {
+        ArrayList<String> todosLosArticulos = new ArrayList<String>();
+        for (Articulo articulo : articulos.values()) {
+            todosLosArticulos.add(articulo.toString());
+        }
+        return todosLosArticulos;
     }
 
     public ArrayList<String> mostrarComentariosDeUnArticulo(Integer idArticulo) {
@@ -62,7 +69,12 @@ public class News {
         return comentarios;
     }
 
-    public ArrayList<Articulo> mostrarArticlosPorAutor(Integer dniAutor) {
+    public ArrayList<Articulo> mostrarArticulosPorAutor(Integer dniAutor) throws InputMismatchException {
+        if(dniAutor <= 0){
+            throw new InputMismatchException("DNI no valido");
+        }else if(!(usuarios.containsKey(dniAutor)) || !(usuarios.get(dniAutor) instanceof Autor)){
+            throw new IllegalArgumentException("El DNI ingresado no es de un autor en el sistema");
+        }
         ArrayList<Articulo> articulosDeAutor = new ArrayList<Articulo>();
 
         for (Articulo articulo : this.articulos.values()) {

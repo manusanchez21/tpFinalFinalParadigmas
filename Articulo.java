@@ -74,6 +74,6 @@ public class Articulo implements Guardable {
     }
 
     public String toString(){
-        return "\n" + categoria + "\n" + titulo + ": " + detalle + "\n" + fecha.toString() + "\n";
+        return "\n" + categoria + "\n" + titulo + ": " + detalle + "\n" + fecha.toString() + " - " + autor.getNombre() + "\n";
     }
 }
