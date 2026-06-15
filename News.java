@@ -92,6 +92,9 @@ public class News {
         if (edad < 0) {
             throw new IllegalArgumentException("No se puede generar una edad menor a 0");
         }
+        if (DNI <= 0) {
+            throw new IllegalArgumentException("DNI no valido");
+        }
         for (Usuario usuario : usuarios.values()) {
             if (usuario.getDNI() == DNI) {
                 throw new IllegalArgumentException("Ya existe un usuario con este DNI");
@@ -108,6 +111,9 @@ public class News {
         }
         if (edad < 0) {
             throw new IllegalArgumentException("No se puede generar una edad menor a 0");
+        }
+        if (DNI <= 0) {
+            throw new IllegalArgumentException("DNI no valido");
         }
         for (Usuario usuario : usuarios.values()) {
             if (usuario.getDNI() == DNI) {
