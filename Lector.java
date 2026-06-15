@@ -1,11 +1,11 @@
 public class Lector extends Usuario {
     public Lector(Integer DNI, String nombre, Integer edad) {
-        super(Integer DNI, String nombre, Integer edad);
+        super(DNI, nombre, edad);
     }    
 
     @Override
     public String toCsv() {
-        return dni "," nombre "," edad ",";
+        return this.DNI + "," + nombre + "," + edad + ",";
     }
 
     @Override

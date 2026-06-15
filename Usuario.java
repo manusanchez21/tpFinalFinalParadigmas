@@ -2,6 +2,7 @@ public abstract class Usuario {
     private Integer DNI;
     private String nombre;
     private Integer edad;
+
     public Usuario(Integer DNI, String nombre, Integer edad) {
         this.DNI = DNI;
         this.nombre = nombre;
@@ -9,7 +10,7 @@ public abstract class Usuario {
     }
     
     public void comentar(Articulo articulo, String texto) {
-        Comentario comentario = new Comentario(texto);
+        Comentario comentario = new Comentario(this.DNI, texto);
         articulo.agregarComentario(comentario);
         // Handler
     }

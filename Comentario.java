@@ -1,5 +1,3 @@
-package com.example.models;
-
 public class Comentario {
     private Integer dniUsuario;
     private String texto;
