@@ -22,7 +22,7 @@ public class Articulo {
         this.categoria = categoria; 
     }
 
-    Articulo(Integer idArticulo, Integer dniAutor, String titulo, String detalle, String fecha, Categoria categoria){
+    Articulo(Integer idArticulo, Integer dniAutor, String titulo, String detalle, String fecha, ArrayList<Comentario> comentarios, Categoria categoria){
         if (idArticulo >= idCounter) {
             idCounter = idArticulo + 1;
         }
@@ -32,7 +32,7 @@ public class Articulo {
         this.detalle = detalle;
         String[] fechaPartes = fecha.split("-");
         this.fecha = LocalDate.of(Integer.parseInt(fechaPartes[0]), Integer.parseInt(fechaPartes[1]), Integer.parseInt(fechaPartes[2]));
-        comentarios = new ArrayList<Comentario>();
+        this.comentarios = comentarios;
         this.categoria = categoria; 
     }
 
