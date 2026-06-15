@@ -1,18 +1,22 @@
 import java.io.IOException;
 
 public class Comentario implements Guardable {
-    private Integer dniUsuario;
+    private Usuario usuario;
     private Integer idArticulo;
     private String texto;
     
-    Comentario(Integer dniUsuario, Integer idArticulo, String texto){
-        this.dniUsuario = dniUsuario;
+    Comentario(Usuario usuario, Integer idArticulo, String texto){
+        this.usuario = usuario;
         this.idArticulo = idArticulo;
         this.texto = texto;
     }
 
     public String toCsv() {
-        return dniUsuario + "," + idArticulo + "," + texto;
+        return this.usuario.getNombre() + "," + idArticulo + "," + texto;
+    }
+
+    public String toString() {
+        return "El nombre del usuario es " + usuario.getNombre() + " y el comentario es " + this.texto;
     }
 
     public void guardarEnArchivo() throws IOException {

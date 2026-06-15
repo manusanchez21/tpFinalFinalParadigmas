@@ -11,9 +11,10 @@ public abstract class Usuario implements Guardable {
         this.edad = edad;
     }
     
-    public void comentar(Articulo articulo, String texto) {
-        Comentario comentario = new Comentario(this.DNI, articulo.getIdArticulo(), texto);
+    public Comentario comentar(Articulo articulo, String texto) {
+        Comentario comentario = new Comentario(this, articulo.getIdArticulo(), texto);
         articulo.agregarComentario(comentario);
+        return comentario;
         // Handler
     }
 

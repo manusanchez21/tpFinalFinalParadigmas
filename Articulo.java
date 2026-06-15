@@ -41,6 +41,10 @@ public class Articulo implements Guardable {
         comentarios.add(comentario);
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
+
     public LocalDate getFecha() {
         return fecha;
     }

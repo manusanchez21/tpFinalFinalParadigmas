@@ -45,13 +45,20 @@ public class News {
         return this.articulos.values();
     }
 
-    public ArrayList<Comentario> mostrarComentariosDeUnArticulo(Integer idArticulo) {
-        for (Articulo articulo : articulos.values()) {
-            if (articulo.getIdArticulo() == idArticulo) {
-                return articulo.getComentarios();
-            }
+    public ArrayList<String> mostrarComentariosDeUnArticulo(Integer idArticulo) {
+        Articulo articulo = articulos.get(idArticulo);
+
+        if (articulo == null) {
+            throw new IllegalArgumentException("El articulo no existe");
+        } 
+
+        ArrayList<String> comentarios = new ArrayList<String>();
+
+        for (Comentario comentario: articulo.getComentarios()) {
+            String comentarioString = comentario.toString();
+            comentarios.add(comentarioString);
         }
-        ArrayList<Comentario> comentarios = null;
+
         return comentarios;
     }
 
@@ -143,7 +150,7 @@ public class News {
 
         validarExistenciaUsuario(dniUsuario);
 
-        Comentario comentario = new Comentario(dniUsuario, idArticulo, text);
+        Comentario comentario = usuarios.get(dniUsuario).comentar(articulos.get(idArticulo), text);
         int existeArticulo = 0;
         for (Articulo articulo : articulos.values()) {
             if (articulo.getIdArticulo() == idArticulo) {

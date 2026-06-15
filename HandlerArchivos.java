@@ -53,7 +53,7 @@ public class HandlerArchivos {
 
         String articuloCsv = reader.readLine();
 
-        HashMap<Integer, ArrayList<Comentario>> comentarios = cargarComentarios();
+        HashMap<Integer, ArrayList<Comentario>> comentarios = cargarComentarios(usuarios);
 
         while (articuloCsv != null) {
             String[] datos = articuloCsv.split(",");
@@ -81,7 +81,7 @@ public class HandlerArchivos {
         return articulos;
     }
 
-    private HashMap<Integer, ArrayList<Comentario>> cargarComentarios() throws IOException {
+    private HashMap<Integer, ArrayList<Comentario>> cargarComentarios(HashMap<Integer, Usuario> usuarios) throws IOException {
         HashMap<Integer, ArrayList<Comentario>> comentarios = new HashMap<Integer, ArrayList<Comentario>>();
 
         BufferedReader reader = new BufferedReader(new FileReader("comentarios.txt"));
@@ -92,7 +92,7 @@ public class HandlerArchivos {
             String[] datos = comentarioCsv.split(",");
             Integer dniUsuario = Integer.parseInt(datos[0]);
             Integer idArticulo = Integer.parseInt(datos[1]);
-            Comentario comentario = new Comentario(dniUsuario, idArticulo, datos[2]);
+            Comentario comentario = new Comentario(usuarios.get(dniUsuario), idArticulo, datos[2]);
             ArrayList<Comentario> comentariosTemp = comentarios.get(idArticulo);
             comentariosTemp.add(comentario);
             comentarios.put(idArticulo, comentariosTemp);
