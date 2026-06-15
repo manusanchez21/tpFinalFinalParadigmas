@@ -5,7 +5,7 @@ public class Lector extends Usuario {
 
     @Override
     public String toCsv() {
-        return this.DNI + "," + nombre + "," + edad + ",";
+        return this.DNI + "," + nombre + "," + edad + ",1";
     }
 
     @Override
