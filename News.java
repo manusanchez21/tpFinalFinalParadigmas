@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class News {
@@ -8,13 +9,21 @@ public class News {
     // hacer constructor para cuando se inicializa el programa cargando arraylists
 
     public News() {
-        this.usuarios = new ArrayList<Usuario>();
-        this.articulos = new ArrayList<Articulo>();
         this.handlerArchivos = new HandlerArchivos();
+        try {
+            this.articulos = handlerArchivos.cargarArticulos();
+            this.usuarios = handlerArchivos.cargarUsuarios();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
-    public void listarArticulosUltimoAnio() {
-
+    public ArrayList<Articulo> listarArticulosUltimoAnio() {
+        ArrayList<Articulo> articulosFiltrados = new ArrayList<Articulo>();
+        for (Articulo articulo : this.articulos) {
+            if (articulo.getFecha().isAfter())
+        }
+        return articulosFiltrados;
     }
 
     public void listarArticulosUltimoMes() {

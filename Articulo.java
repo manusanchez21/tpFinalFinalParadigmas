@@ -39,6 +39,10 @@ public class Articulo {
     public void agregarComentario(Comentario comentario){
         comentarios.add(comentario);
     }
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
     
     public String toCsv() {
         return idArticulo + "," + dniAutor + "," + titulo + "," + detalle + "," + fecha + "," + categoria;
