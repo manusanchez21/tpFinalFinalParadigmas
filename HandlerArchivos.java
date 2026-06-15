@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HandlerArchivos {
     public HandlerArchivos() {
@@ -49,29 +50,53 @@ public class HandlerArchivos {
 
         BufferedReader reader = new BufferedReader(new FileReader("articulos.txt"));
 
-        String articulo = reader.readLine();
+        String articuloCsv = reader.readLine();
 
-        if (articulo != null) {
-            String[] datos = articulo.split(",");
+        HashMap<Integer, ArrayList<Comentario>> comentarios = cargarComentarios();
 
+        if (articuloCsv != null) {
+            String[] datos = articuloCsv.split(",");
+            Integer idArticulo = Integer.parseInt(datos[0]);
+            Integer dniAutor = Integer.parseInt(datos[1]);
+            datos[6] = datos[6].trim();
+            Categoria categoria = Categoria.valueOf(datos[6]); 
+            if (comentarios.get(idArticulo) != null) {
+                Articulo articulo = new Articulo(idArticulo, dniAutor, datos[2], datos[3], datos[4],
+                        comentarios.get(idArticulo), categoria);
+                articulos.add(articulo);
+
+            } else {
+                Articulo articulo = new Articulo(idArticulo, dniAutor, datos[2], datos[3], datos[4],
+                        new ArrayList<Comentario>(), categoria);
+                articulos.add(articulo);
+            }
+            articuloCsv = reader.readLine();
         }
 
+        reader.close();
         return articulos;
     }
 
-    public ArrayList<Comentario> cargarComentarios() throws IOException {
-        ArrayList<Comentario> comentarios = new ArrayList<Comentario>();
+    public HashMap<Integer, ArrayList<Comentario>> cargarComentarios() throws IOException {
+        HashMap<Integer, ArrayList<Comentario>> comentarios = new HashMap<Integer, ArrayList<Comentario>>();
 
         BufferedReader reader = new BufferedReader(new FileReader("comentarios.txt"));
 
-        String articulo = reader.readLine();
+        String comentarioCsv = reader.readLine();
 
-
-        if (articulo != null) {
-            
-            comentarios.add(null)
+        while (comentarioCsv != null) {
+            String[] datos = comentarioCsv.split(",");
+            Integer dniUsuario = Integer.parseInt(datos[0]);
+            Integer idArticulo = Integer.parseInt(datos[1]);
+            Comentario comentario = new Comentario(dniUsuario, idArticulo, datos[2]);
+            ArrayList<Comentario> comentariosTemp = comentarios.get(idArticulo);
+            comentariosTemp.add(comentario);
+            comentarios.put(idArticulo, comentariosTemp);
+            comentarioCsv = reader.readLine();
         }
 
+        reader.close();
         return comentarios;
     }
+
 }
